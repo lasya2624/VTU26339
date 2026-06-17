@@ -1,20 +1,38 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Navbar(){
+function Navbar() {
 
-return(
+    return (
 
-<div>
+        <div
+            style={{
+                padding: "15px",
+                background: "#222"
+            }}
+        >
 
-<Link to="/">All Notifications</Link>
+            <Link
+                to="/"
+                style={{
+                    color: "white",
+                    marginRight: "20px"
+                }}
+            >
+                All Notifications
+            </Link>
 
-&nbsp;&nbsp;
+            <Link
+                to="/priority"
+                style={{
+                    color: "white"
+                }}
+            >
+                Priority Notifications
+            </Link>
 
-<Link to="/priority">Priority Notifications</Link>
+        </div>
 
-</div>
-
-);
+    );
 
 }
 

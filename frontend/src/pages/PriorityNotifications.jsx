@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Log } from "../utils/logger";
+import Navbar from "../components/Navbar";
 
 function PriorityNotifications() {
 
@@ -69,6 +70,7 @@ function PriorityNotifications() {
     return (
 
         <div>
+             <Navbar />
 
             <h1>
 

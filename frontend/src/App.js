@@ -1,26 +1,31 @@
-import {BrowserRouter,Routes,Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AllNotifications from "./pages/AllNotifications";
-
 import PriorityNotifications from "./pages/PriorityNotifications";
 
-function App(){
+function App() {
 
-return(
+    return (
 
-<BrowserRouter>
+        <BrowserRouter>
 
-<Routes>
+            <Routes>
 
-<Route path="/" element={<AllNotifications/>}/>
+                <Route
+                    path="/"
+                    element={<AllNotifications />}
+                />
 
-<Route path="/priority" element={<PriorityNotifications/>}/>
+                <Route
+                    path="/priority"
+                    element={<PriorityNotifications />}
+                />
 
-</Routes>
+            </Routes>
 
-</BrowserRouter>
+        </BrowserRouter>
 
-);
+    );
 
 }
 
