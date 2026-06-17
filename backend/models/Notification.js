@@ -1,38 +1,35 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+const {DataTypes}=require("sequelize");
 
-const Notification = sequelize.define("Notification", {
+const sequelize=require("../config/database");
 
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
+const Notification=sequelize.define("Notification",{
 
-    type: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
+id:{
+type:DataTypes.INTEGER,
+primaryKey:true,
+autoIncrement:true
+},
 
-    message: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
+studentId:{
+type:DataTypes.INTEGER,
+allowNull:false
+},
 
-    studentId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
+type:{
+type:DataTypes.STRING
+},
 
-    isRead: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-    }
+message:{
+type:DataTypes.TEXT
+},
 
-}, {
+isRead:{
+type:DataTypes.BOOLEAN,
+defaultValue:false
+}
 
-    timestamps: true
-
+},{
+timestamps:true
 });
 
-module.exports = Notification;
+module.exports=Notification;
