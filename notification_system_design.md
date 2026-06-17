@@ -221,3 +221,167 @@ Benefits:
 * Independent processing
 * No data inconsistency
 * Dead letter queue support
+
+# Stage 6 – Priority Notification System
+
+## Objective
+
+The Priority Notification System is designed to display the most important notifications to the user by considering both notification type and recency. Instead of storing notifications in a database, the application consumes the Notification API provided by the evaluation server.
+
+## Approach
+
+1. Fetch all notifications from the Notification API.
+2. Assign a priority score to each notification.
+3. Sort notifications based on the calculated score.
+4. Return only the top 10 notifications.
+
+## Priority Weight
+
+| Notification Type | Weight |
+| ----------------- | ------ |
+| Placement         | 100    |
+| Result            | 80     |
+| Event             | 60     |
+| Others            | 40     |
+
+## Recency
+
+A recency score is added based on the notification timestamp. More recent notifications receive higher scores, ensuring that newly created notifications appear before older notifications of the same type.
+
+## Algorithm
+
+```
+For each notification:
+
+Priority Score =
+Type Weight + Recency Score
+
+Sort notifications in descending order of Priority Score.
+
+Return first 10 notifications.
+```
+
+## Time Complexity
+
+* Priority Calculation: **O(n)**
+* Sorting: **O(n log n)**
+* Extract Top 10: **O(10)**
+
+Overall Complexity:
+
+```
+O(n log n)
+```
+
+## Advantages
+
+* Fast retrieval of important notifications.
+* No database storage required.
+* Dynamic priority calculation.
+* Scalable for large datasets.
+* Easy to modify priority weights in future.
+
+
+# Stage 7 – Frontend Implementation
+
+## Objective
+
+Develop a React-based frontend that displays notifications received from the backend service while integrating the reusable logging middleware across the application.
+
+## Technologies Used
+
+* React JS
+* React Router DOM
+* Axios
+* JavaScript
+* CSS
+
+## Features Implemented
+
+### 1. All Notifications Page
+
+Displays every notification received from the backend Notification API.
+
+Each notification card contains:
+
+* Notification Type
+* Message
+* Timestamp
+
+### 2. Priority Notifications Page
+
+Displays only the Top 10 priority notifications calculated by the backend service.
+
+Notifications are ranked using:
+
+* Notification Type Priority
+* Recency
+
+### 3. Navigation
+
+React Router is used to navigate between:
+
+* All Notifications
+* Priority Notifications
+
+without refreshing the page.
+
+### 4. Logging Middleware Integration
+
+The reusable logging middleware is invoked during:
+
+* Page load
+* API request
+* Successful API response
+* Error handling
+
+Logs are sent to the provided Logging API using the generated Bearer Access Token.
+
+### Frontend Architecture
+
+```
+User
+
+↓
+
+React Components
+
+↓
+
+Axios API Calls
+
+↓
+
+Express Backend
+
+↓
+
+Notification API
+
+↓
+
+Priority Service
+
+↓
+
+Response to React UI
+```
+
+## Benefits
+
+* Responsive and modular UI.
+* Reusable components.
+* Separation of concerns.
+* Efficient API communication.
+* Easy maintenance and scalability.
+* Logging support for debugging and monitoring.
+
+## Future Enhancements
+
+* Search functionality.
+* Notification filtering.
+* Pagination.
+* Dark mode.
+* Real-time updates using WebSockets.
+* Mark notifications as read.
+* Push notification support.
