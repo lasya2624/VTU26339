@@ -1,8 +1,9 @@
+const Log = require("../middleware/logger");
+
 function calculateScore(notification) {
 
     let score = 0;
 
-    // Priority weight
     switch (notification.Type) {
 
         case "Placement":
@@ -21,33 +22,30 @@ function calculateScore(notification) {
             score += 40;
     }
 
-    // Recency score
-    const now = new Date().getTime();
+    // Recency Score
+    const createdTime = new Date(notification.Timestamp).getTime();
+    const currentTime = new Date().getTime();
 
-    const created = new Date(notification.Timestamp).getTime();
-
-    const diffHours = (now - created) / (1000 * 60 * 60);
+    const diffHours = (currentTime - createdTime) / (1000 * 60 * 60);
 
     score += Math.max(0, 50 - diffHours);
 
     return score;
 }
 
-function getTopNotifications(notifications) {
+async function getTopNotifications(notifications) {
 
-    notifications.forEach(n => {
+    notifications.forEach(notification => {
 
-        n.score = calculateScore(n);
+        notification.priorityScore = calculateScore(notification);
 
     });
 
-    notifications.sort((a, b) => b.score - a.score);
+    notifications.sort((a, b) => b.priorityScore - a.priorityScore);
 
     return notifications.slice(0, 10);
 }
 
 module.exports = {
-
     getTopNotifications
-
 };

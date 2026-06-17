@@ -1,39 +1,24 @@
-const express = require("express");
-const cors = require("cors");
+const express=require("express");
+
+const cors=require("cors");
+
 require("dotenv").config();
 
-const sequelize = require("./config/database");
+const route=require("./routes/notificationRoute");
 
-// IMPORTANT: Import the model
-require("./models/Notification");
-
-const app = express();
+const app=express();
 
 app.use(cors());
+
 app.use(express.json());
 
-const notificationRoute =
-require("./routes/notificationRoute");
-
+app.use("/api",route);
 app.get("/", (req, res) => {
     res.send("Backend Running Successfully");
 });
-app.use(
 
-"/api",
+app.listen(5000,()=>{
 
-notificationRoute
+console.log("Server running on port 5000");
 
-);
-
-sequelize.sync({ alter: true })
-.then(() => {
-    console.log("Database Connected");
-
-    app.listen(5000, () => {
-        console.log("Server running on port 5000");
-    });
-})
-.catch(err => {
-    console.log(err);
 });

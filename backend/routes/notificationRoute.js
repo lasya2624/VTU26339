@@ -4,11 +4,21 @@ const router = express.Router();
 
 const controller = require("../controllers/notificationController");
 
+console.log(controller);
+
 router.get(
 
     "/priority",
 
-    controller.priorityNotifications
+    controller.getPriorityNotifications
+
+);
+
+router.get(
+
+    "/all",
+
+    controller.getAllNotifications
 
 );
 
