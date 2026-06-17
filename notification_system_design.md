@@ -160,3 +160,64 @@ ON notifications(studentID,isRead,createdAt);
 ```
 
 This index significantly improves query performance by allowing the database to filter and sort efficiently.
+
+
+# Stage 4
+
+Current approach:
+
+Every page load fetches notifications from the database.
+
+Problems:
+
+* High database load
+* Increased response time
+* Poor scalability
+
+Proposed improvements:
+
+* Redis caching
+* Pagination
+* Lazy loading
+* Infinite scrolling
+* WebSocket for real-time notifications
+* Fetch only unread notifications
+* Client-side caching for recently viewed notifications
+
+These changes reduce database traffic and improve response time.
+
+
+# Stage 5
+
+The implementation is unreliable because if sendEmail() fails for one student, the database and push notification operations become inconsistent.
+
+A better architecture uses asynchronous message queues.
+
+Flow:
+
+HR clicks Notify All
+
+↓
+
+Queue (RabbitMQ/Kafka)
+
+↓
+
+Email Worker
+
+↓
+
+Push Worker
+
+↓
+
+Database Worker
+
+Benefits:
+
+* Retry support
+* Fault tolerance
+* Scalability
+* Independent processing
+* No data inconsistency
+* Dead letter queue support

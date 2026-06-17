@@ -12,9 +12,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const notificationRoute =
+require("./routes/notificationRoute");
+
 app.get("/", (req, res) => {
     res.send("Backend Running Successfully");
 });
+app.use(
+
+"/api",
+
+notificationRoute
+
+);
 
 sequelize.sync({ alter: true })
 .then(() => {
