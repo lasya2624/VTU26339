@@ -133,3 +133,30 @@ The backend uses **Sequelize ORM** to create and manage the `notifications` tabl
 ### Scalability Considerations
 
 As the number of notifications grows into millions of records, query performance may degrade due to full table scans. To improve performance, indexes should be created on frequently searched columns such as `studentId`, `isRead`, and `createdAt`.
+
+# Stage 3
+
+Problems
+
+* Uses SELECT *
+* Full table scan
+* Slow when table has millions of records
+
+Optimized Query
+
+```sql
+SELECT id,message,type,createdAt
+FROM notifications
+WHERE studentID=1042
+AND isRead=false
+ORDER BY createdAt ASC;
+```
+
+Create Index
+
+```sql
+CREATE INDEX idx_notification
+ON notifications(studentID,isRead,createdAt);
+```
+
+This index significantly improves query performance by allowing the database to filter and sort efficiently.
